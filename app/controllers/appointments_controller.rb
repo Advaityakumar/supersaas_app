@@ -29,7 +29,8 @@ class AppointmentsController < ApplicationController
         )
         logger.warn "List of events sent"
       elsif ["1", "2", "3"].include? message
-        event = events[params[:Body].to_i]
+      	index = params[:Body].to_i - 1
+        event = events[index]
         
         #Create appointment according to the reply
         create_appointment(event['start'], event['finish'], user['full_name'], user['name'])
