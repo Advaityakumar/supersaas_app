@@ -10,6 +10,7 @@ class AppointmentsController < ApplicationController
   end
   
   def message_callback
+  	begin
     message, phone_number = params['Body'], params['From']
     
     #Check if user is registered or not
@@ -50,7 +51,16 @@ class AppointmentsController < ApplicationController
       )
       logger.warn "Registration link sent"
     end
-    render :text => "Success"
+      render :text => "Success"
+    rescue Exception => e
+      @client.messages.create(
+        from: '+19253388043',
+        to: params['From'],
+        body: "Some error occured. Please try again"
+      )
+      logger.warn e.message
+      render :text => "Success"
+    end
   end
   
   def get_client
