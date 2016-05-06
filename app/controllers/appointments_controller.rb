@@ -31,6 +31,12 @@ class AppointmentsController < ApplicationController
         
         #Create appointment according to the reply
         create_appointment(event['start'], event['finish'], user['full_name'], user['name'])
+        reply = "You are registered in this event #{event['title']} #{event['start']}-#{event['finish']}"
+        @client.messages.create(
+          from: '+19253388043',
+          to: phone_number,
+          body: reply
+        )
       end
     else
       #Send registration url if not registered.
