@@ -26,6 +26,7 @@ class AppointmentsController < ApplicationController
           to: phone_number,
           body: reply
         )
+        logger.warn "List of events sent"
       elsif ["1", "2", "3"].include? message
         event = events[params[:Body].to_i]
         
@@ -37,6 +38,7 @@ class AppointmentsController < ApplicationController
           to: phone_number,
           body: reply
         )
+        logger.warn "Event booked"
       end
     else
       #Send registration url if not registered.
@@ -46,6 +48,7 @@ class AppointmentsController < ApplicationController
         to: phone_number,
         body: reply
       )
+      logger.warn "Registration link sent"
     end
     render :text => "Success"
   end
